@@ -33,6 +33,7 @@ class Schedule extends Model
         'broker_signature',
         'file',
         'time_stamp',
+        'time_stamp_document',
     ];
 
     public $orderable = [

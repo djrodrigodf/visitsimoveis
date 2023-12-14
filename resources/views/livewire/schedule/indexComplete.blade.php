@@ -69,6 +69,25 @@
                             @include('components.table.sort', ['field' => 'address'])
                         </th>
                         <th>
+                            {{ trans('cruds.schedule.fields.buyer_signature') }}
+                            @include('components.table.sort', ['field' => 'buyer_signature'])
+                        </th>
+                        <th>
+                            {{ trans('cruds.schedule.fields.broker_signature') }}
+                            @include('components.table.sort', ['field' => 'broker_signature'])
+                        </th>
+                        <th>
+                            {{ trans('cruds.schedule.fields.file') }}
+                            @include('components.table.sort', ['field' => 'file'])
+                        </th>
+                        <th>
+                            {{ trans('cruds.schedule.fields.time_stamp') }}
+                            @include('components.table.sort', ['field' => 'time_stamp'])
+                        </th>
+                        <th>
+                            {{ trans('cruds.schedule.fields.partners') }}
+                        </th>
+                        <th>
                         </th>
                     </tr>
                 </thead>
@@ -108,20 +127,28 @@
                                 {{ $schedule->address }}
                             </td>
                             <td>
+                                {{ $schedule->buyer_signature }}
+                            </td>
+                            <td>
+                                {{ $schedule->broker_signature }}
+                            </td>
+                            <td>
+                                {{ $schedule->file }}
+                            </td>
+                            <td>
+                                {{ $schedule->time_stamp }}
+                            </td>
+                            <td>
+                                @foreach($schedule->partners as $key => $entry)
+                                    <span class="badge badge-relationship">{{ $entry->name }}</span>
+                                @endforeach
+                            </td>
+                            <td>
                                 <div class="flex justify-end">
                                     @can('schedule_show')
-                                        @if($schedule->time_stamp_document)
-
-                                        @elseif($schedule->time_stamp)
-                                            <a class="btn btn-sm btn-info mr-2" href="{{ route('admin.finish', $schedule) }}">
-                                                Concluir
-                                            </a>
-                                        @else
-                                            <a class="btn btn-sm btn-info mr-2" href="{{ route('admin.visitas', $schedule) }}">
-                                                Registrar
-                                            </a>
-                                        @endif
-
+                                        <a class="btn btn-sm btn-info mr-2" href="{{ route('admin.schedules.show', $schedule) }}">
+                                            {{ trans('global.view') }}
+                                        </a>
                                     @endcan
                                     @can('schedule_edit')
                                         <a class="btn btn-sm btn-success mr-2" href="{{ route('admin.schedules.edit', $schedule) }}">
@@ -129,9 +156,9 @@
                                         </a>
                                     @endcan
                                     @can('schedule_delete')
-                                            <button class="btn btn-sm btn-rose mr-2" type="button" wire:click="confirm('delete', {{ $schedule->id }})" wire:loading.attr="disabled">
-                                                {{ trans('global.delete') }}
-                                            </button>
+                                        <button class="btn btn-sm btn-rose mr-2" type="button" wire:click="confirm('delete', {{ $schedule->id }})" wire:loading.attr="disabled">
+                                            {{ trans('global.delete') }}
+                                        </button>
                                     @endcan
                                 </div>
                             </td>
